@@ -1,0 +1,3 @@
+Home Page
+
+As a user, when I visit the website, I should be able to immediately start searching for movies. I will need to be logged in to add them to my list. Once logged in, I should be able to click a “recommend me” button and see a list of recommended movies. I should be able to click on a movie thumbnail or title and be taken to an imdb page for the movie. In addition, I should be able to watch movie trailers for my recommendations.

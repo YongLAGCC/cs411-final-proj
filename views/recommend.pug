@@ -1,0 +1,94 @@
+html
+	head
+		title Recommend
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/style.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+	body
+		include ./navbar.pug
+		div(class='container-fluid')
+			h1 Recommended For You
+			if searchresult
+				each m in searchresult 
+					<div class= "container">
+						<div class="container-recommend">
+							<div class="row-recommend">
+								each movie in m
+										<div class="col-sm-6 col-md-4">
+											<div class="thumbnail-recommend"> 
+												img(src=movie.Poster, alt='Movie Poster')
+												<div class="caption">
+													h4 Title:
+													p= movie.Title
+													h4 Year:
+													p= movie.Year	
+
+
+													<div class= "pull-left">	
+														button(
+															type='button',
+															class='button',
+															id='watch-list-btn-' + movie.imdbID,
+															onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
+														)= "Add to Watch List"
+													</div>
+													<div class="clearfix">
+														<div class= "pull-right">
+															
+																button(
+																	type='button', 
+																	class='button',
+																	id='seen-list-btn-' + movie.imdbID,
+																	onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
+																)= "I've seen this"
+		
+														</div>
+													</div>
+														if movie.imdbID in trailers
+															div(class="movie-trailer")
+																iframe(
+																	width="365",
+																	height="300",
+																	src="https://www.youtube.com/embed/" + trailers[movie.imdbID],
+																	frameborder="15px",
+																	allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+																	allowfullscreen
+																)
+														else
+															p= "No Trailer Available."
+		
+												</div>
+											</div>
+										</div>
+
+							</div>
+						</div>
+					</div>
+			else 
+				h3 No recommendations found! Try adding movies to your seen list
+
+		</div>
+		if user
+			script.
+				function addToWatchList(movieTitle, movieID, posterURL) {
+					console.log("Add to watch list", movieTitle, movieID)
+					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
+						console.log("Request is done. Returned:", data)
+						let watchButton = document.getElementById('watch-list-btn-' + movieID)
+						watchButton.innerHTML = "Added!"
+					})
+
+				}
+				function addToSeenList(movieTitle, movieID, posterURL) {
+					console.log("Add to seen list", movieTitle, movieID)
+					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
+						console.log("Request is done. Returned:", data)
+						let seenButton = document.getElementById('seen-list-btn-' + movieID)
+						seenButton.innerHTML = "Added!"
+					})
+				}
+		else
+			script.
+				function addToWatchList(movieTitle, movieID) { alert("Please log in to do that.") }
+				function addToSeenList(movieTitle, movieID) { alert("Please log in to do that.") }

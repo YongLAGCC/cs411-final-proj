@@ -1,0 +1,3 @@
+Sign Up & Log In
+
+On the front page of the website there should be a login button. When the user clicks it, they’ll be taken to a “login page” where the only option will be to log in with your Facebook account. When you press it Facebook will ask if you want to connect your account and will show the app’s permissions. If the user declines, they will be brought back to the home page. If they accept, they’ll go forward to the “logged-in user home page”, which lists their movies.

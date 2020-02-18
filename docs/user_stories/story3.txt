@@ -1,0 +1,9 @@
+Logged-in user Home Page
+
+If a logged in user returns to the web app, or if a non-logged-in user logs in, they’ll be taken to the logged-in user home page. This page will have:
+
+* A list of movies you've seen.
+* A list of movies you'd like to see.
+* A “get movie recommendation” button.
+
+Entering text into the search bar pulls up results as before, except now there’s an “add to seen-list” or “add to watch-list”.

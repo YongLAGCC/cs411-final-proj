@@ -1,0 +1,5 @@
+Get a Recommendation
+
+The “get a movie recommendation” button will pull up a page with a list of recommendations for them based on movies they've seen, using factors like actors, directors, and genre to make those recs.
+
+On the recommend page you can add movies to your seen list to improve recommendations or add them to your watch list so you don't forget them.

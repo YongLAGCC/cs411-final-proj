@@ -1,0 +1,73 @@
+html
+	head
+		title Profile
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/style.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+	body
+		include ./navbar.pug
+		div(class='container-fluid')
+			h1 Your Profile
+			if user
+				div(class="list-container")
+					div(id='profile-nav')
+						nav(class='navbar navbar-default')
+							//- change how movie navbar tab looks based on "listType"
+							ul(class='nav navbar-nav')
+								li
+									if listType === "Watch List"
+										a(href="/profile", class="active")="Watch List"
+									else
+										a(href="/profile")="Watch List"
+								li
+									if listType === "Seen List"
+										a(href="/profile?status=1", class="active")="Seen List"
+									else
+										a(href="/profile?status=1")="Seen List"
+					div(class="table-title")
+						span(class="text") #{listType}
+					table(id="profile-table", class="table table-striped")
+						thead
+							tr
+								th= "#"
+								th= "Poster"
+								th= "Title"
+								th= "Score"
+								th= "Remove"
+						tbody
+							each movieInList, index in listOfMovies
+								tr
+									td= (index+1)
+									td
+										img(src=movieInList.poster, height='100px', alt='Movie Poster')
+									td= movieInList.name
+									td= "-"
+									td
+										if listType === "Watch List"
+											button(class="button button-delete", onclick="removeWatchlistMovie(\"" + movieInList.imdbID + "\")")= "Remove (watchlist)"
+										else if listType === "Seen List"
+											button(class="button button-delete", onclick="removeSeenMovie(\"" + movieInList.imdbID + "\")")= "Remove (seenlist)"
+			else
+				h2 Please log in to view your profile.
+				a(href="/login/facebook") Click here to log in with Facebook
+		if user
+			script.
+				console.log("Logged in...")
+				function removeWatchlistMovie(movieID) {
+					$.get("/api/removeMovie?listName=watchlist&movieID=" + movieID, (data) => {
+						console.log("Request is done. Returned:", data)
+						location.reload()
+					})
+				}
+				function removeSeenMovie(movieID) {
+					$.get("/api/removeMovie?listName=seenlist&movieID=" + movieID, (data) => {
+						console.log("Request is done. Returned:", data)
+						location.reload()
+					})
+				}
+		else
+			script.
+				console.log("Not logged in...")
+
+

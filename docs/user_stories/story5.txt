@@ -1,0 +1,5 @@
+Manage Your Lists
+
+You may get multiple recommendations you want to watch. By adding a movie to your watchlist, you can keep track of what you’d like to see. From this list you can click that you’ve seen a movie (moving it to your seen-list) or you can remove it from your watchlist. 
+
+Similarly, you have a seen-list of movies you've seen. You can add and remove items on this list. The recommendation algorithm uses this list to recommend new films.

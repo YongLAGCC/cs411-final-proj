@@ -1,0 +1,77 @@
+html
+	head
+		title Search
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/style.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+	body
+		include ./navbar.pug
+		div(class='container-fluid')
+			h1 Find a Movie
+			form
+				input(type='text', class='search', id='search-field', placeholder= "              search loved movie" )
+				button(type='button', class='button', id='search-button', onclick='doSearch()')= "Search"
+			if searchresult
+				each movie in searchresult
+					div(class='movie-info')
+						div(class='movie-poster')
+							img(src=movie.Poster, alt='Movie Poster')
+						div(class='movie-details')
+							h3 Title
+							p= movie.Title
+							h3 Year
+							p= movie.Year
+							p
+								button(
+									type='button',
+									class='button',
+									id='watch-list-btn-' + movie.imdbID,
+									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
+								)= "Add to Watch List"
+							p
+								button(
+									type='button',
+									class='button',
+									id='seen-list-btn-' + movie.imdbID,
+									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
+								)= "I've seen this"
+			else if moviename
+				h3 No results were found for #{moviename}
+
+		script.
+			// allow the enter key to search for a movie
+			let searchField = $('#search-field')[0]
+			searchField.addEventListener('keydown', (event) => {
+				if (event.keyCode === 13) {  		// listen for the enter key
+					event.preventDefault()   		// prevent default action
+					$('#search-button').click()		// click the button
+				}
+			})
+			function doSearch() {
+				let moviename = document.getElementById('search-field').value
+				location.href = "/search?moviename=" + moviename
+			}
+		if user
+			script.
+				function addToWatchList(movieTitle, movieID, posterURL) {
+					console.log("Add to watch list", movieTitle, movieID)
+					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
+						console.log("Request is done. Returned:", data)
+						let watchButton = document.getElementById('watch-list-btn-' + movieID)
+						watchButton.innerHTML = "Added!"
+					})
+
+				}
+				function addToSeenList(movieTitle, movieID, posterURL) {
+					console.log("Add to seen list", movieTitle, movieID)
+					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
+						console.log("Request is done. Returned:", data)
+						let seenButton = document.getElementById('seen-list-btn-' + movieID)
+						seenButton.innerHTML = "Added!"
+					})
+				}
+		else
+			script.
+				function addToWatchList(movieTitle, movieID) { alert("Please log in to do that.") }
+				function addToSeenList(movieTitle, movieID) { alert("Please log in to do that.") }
