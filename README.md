@@ -1,5 +1,5 @@
 # Movies Recommendation to Facebook
-### Authors: Caleb Zhou, David Shen, Ken Garber,
+### Authors: Caleb Zhou(yesyong@bu.edu), David Shen, Ken Garber(kgarber@bu.edu), Varun Malikayil
 This README contains everything you need to know about the project.
 
 ## Running the Project
