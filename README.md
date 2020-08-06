@@ -1,5 +1,5 @@
-# cs411-final-proj
-
+# Movies Recommendation to Facebook
+### Authors: Caleb Zhou, David Shen, Ken Garber,
 This README contains everything you need to know about the project.
 
 ## Running the Project
