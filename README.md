@@ -1,4 +1,4 @@
-# cs411-final-proj
+# Movie Matching System
 
 This project was a custom-made movie recommendation site using machine learning and natural language processing. You can log in to the application using Facebook and select movies you are interested in watching. Then based on a multitude of factors such as genre, director, cast, release date, ratings, and many more this application will recommend movies based on different clusters from our unique algorithm.
 
